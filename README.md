@@ -55,13 +55,36 @@ Social network analysis (SNA) can be used to address research questions related 
 ## Definitions and concepts
 * **Isolated students**: appear as nodes with no connections in terms of social and academic. Connections between nodes are weighted according to the number posts and replies made between the participants
 
-   *E.g.: in the world of online learning, participant who has submitted a post but no other participants have responded can be indicated as an isolated user.
-   *E.g.: in the world of online learning, attrition rates are frequently reported as higher than their on-campus counterparts. This has in part, been attributed to a lack of connectivity that is both social and academic, with fellow learners and the institution. Thus, any aids that can be afforded to forum facilitators to more accurately identify students that have not connected or have dis-engaged with the learning network early in their academic study, may assist with addressing concerns related to online attrition. 
+   * In the world of online learning, participant who has submitted a post but no other participants have responded can be indicated as an isolated user.
+   * In the world of online learning, attrition rates are frequently reported as higher than their on-campus counterparts. This has in part, been attributed to a lack of connectivity that is both social and academic, with fellow learners and the institution. Thus, any aids that can be afforded to forum facilitators to more accurately identify students that have not connected or have dis-engaged with the learning network early in their academic study, may assist with addressing concerns related to online attrition. 
 
 * **Sub-groups or cliques**: may indicate strong bonding among a core set of students. However, the formation of these strong cliques can be to the detriment of other actors attempting to engage. The formation of these groups can also limit the diversity of engagement with peers. 
 
-   *E.g.: in large class forums students will form cliques based on perceived academic potential. An effective strategy may include 1) assigning participants to new groups and establishing additional group specific discussion forums. 2) encourage participants to interact across multiple cliques (i.e. bridge structural holes) to foster intergroup idea sharing.
+   * In large class forums students will form cliques based on perceived academic potential. An effective strategy may include 1) assigning participants to new groups and establishing additional group specific discussion forums. 2) encourage participants to interact across multiple cliques (i.e. bridge structural holes) to foster intergroup idea sharing.
    
-  
+## Relevant Materials about Social Network Analysis:
+#### Related Readings
+
+[Bakharia, A., & Dawson, S. (2011). SNAPP: A BirdâS-eye View of Temporal Participant Interaction. In Proceedings of the 1st International Conference on Learning Analytics and Knowledge (pp. 168â173). Banff, Alberta, Canada:ACM.](https://doi.org/10.1145/2090116.2090144)
+
+[Hanneman, R. & Riddle, M. (2005). Introduction to Social Network Methods. Riverside, CA:  University of California, Riverside](http://faculty.ucr.edu/~hanneman/)  
+  * [Chapter 10: Centrality & Power](http://faculty.ucr.edu/~hanneman/nettext/C10_Centrality.html)  
+  * [Chapter 11: Cliques & Subgroups](http://faculty.ucr.edu/~hanneman/nettext/C11_Cliques.html)  
+
+
+#### Related Videos
+
+[Williams, N. (2014). Basics of Social Network Analysis.](https://www.youtube.com/watch?v=PT99WF1VEws)
+
+[Complexity Labs. (2015). Social Network Analysis Overview.](https://www.youtube.com/watch?v=fgr_g1q2ikA)
+
+[Complexity Labs. (2015). Network Centrality.](https://www.youtube.com/watch?v=NgUj8DEH5Tc)
+
+[Complexity Labs. (2015). Network Clustering & Connectedness.](https://www.youtube.com/watch?v=2Oa7mef77nM)
+
+[iGraph. (2016). Get Started with R iGraph](http://igraph.org/r/#docs)
+
+[Social Network Analysis with R - Examples](https://www.youtube.com/watch?v=0xsM0MbRPGE)
+
 ## Author
 [Katherine Tan](www.linkedin.com/in/katherine-tan-2019), M.S student in Learning Analytics at Teachers College, Columbia University
