@@ -1,4 +1,5 @@
 # Social Network Analysis
+![2de530740731a175c103748713f8fced](https://user-images.githubusercontent.com/46146748/63127038-62273800-bf7f-11e9-914f-bd1c431c76f2.png)
 
 ## Goal of the analysis
 
@@ -52,12 +53,14 @@ Social network anlaysis (SNA) has found utility is institutional, classroom and 
 Social network analysis (SNA) can be used to address research questions related to the level of participant engagement, identification of central participants and isolated students. Also, SNA provides instructors with the capacity to visualize group cohesion, network density, and evaluate the impact of intervention strategies on student engagement and connectivity by evaluating the evolution of participant relationships within discussions forums
 
 ## Definitions and concepts
-* Isolated students: appear as nodes with no connections in terms of social and academic. Connections between nodes are weighted according to the number posts and replies made between the participants
-   E.g.: in the world of online learning, participant who has submitted a post but no other participants have responded can be indicated as an isolated user.
-   E.g.: in the world of online learning, attrition rates are frequently reported as higher than their on-campus counterparts. This has in part, been attributed to a lack of connectivity that is both social and academic, with fellow learners and the institution. Thus, any aids that can be afforded to forum facilitators to more accurately identify students that have not connected or have dis-engaged with the learning network early in their academic study, may assist with addressing concerns related to online attrition. 
+* **Isolated students**: appear as nodes with no connections in terms of social and academic. Connections between nodes are weighted according to the number posts and replies made between the participants
 
-* Sub-groups or cliques: may indicate strong bonding among a core set of students. However, the formation of these strong cliques can be to the detriment of other actors attempting to engage. The formation of these groups can also limit the diversity of engagement with peers. 
-   E.g.: in large class forums students will form cliques based on perceived academic potential. An effective strategy may include 1) assigning participants to new groups and establishing additional group specific discussion forums. 2) encourage participants to interact across multiple cliques (i.e. bridge structural holes) to foster intergroup idea sharing.
+   *E.g.: in the world of online learning, participant who has submitted a post but no other participants have responded can be indicated as an isolated user.
+   *E.g.: in the world of online learning, attrition rates are frequently reported as higher than their on-campus counterparts. This has in part, been attributed to a lack of connectivity that is both social and academic, with fellow learners and the institution. Thus, any aids that can be afforded to forum facilitators to more accurately identify students that have not connected or have dis-engaged with the learning network early in their academic study, may assist with addressing concerns related to online attrition. 
+
+* **Sub-groups or cliques**: may indicate strong bonding among a core set of students. However, the formation of these strong cliques can be to the detriment of other actors attempting to engage. The formation of these groups can also limit the diversity of engagement with peers. 
+
+   *E.g.: in large class forums students will form cliques based on perceived academic potential. An effective strategy may include 1) assigning participants to new groups and establishing additional group specific discussion forums. 2) encourage participants to interact across multiple cliques (i.e. bridge structural holes) to foster intergroup idea sharing.
    
   
 ## Author
