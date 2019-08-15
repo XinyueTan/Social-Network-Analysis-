@@ -1,0 +1,219 @@
+---
+title: "Social Network Analysis"
+author: "Xinyue Tan"
+date: "2/26/2018"
+output: html_document
+---
+
+In this project, I generate and analyze three social networks (also known as graphs or sociograms) based on three different measures. I use data from:
+
+Representing Classroom Social Structure. Melbourne: Victoria Institute of
+Secondary Education, M. Vickers and S. Chan, (1981)
+
+Available from the Index of Complex Networks ([ICON](https://icon.colorado.edu/#!/))
+
+The data were collected by Vickers & Chan from 29 seventh grade students in a school in Victoria, Australia. Students were asked to nominate their classmates on a number of relations including the following three "layers":  
+
+1. Who do you get on with in the class?  
+2. Who are your best friends in the class?  
+3. Who would you prefer to work with?  
+
+I use the data set for each of these questions to perform social network analysis.
+
+
+## Data Wrangling
+
+I manipulate each of the data sets so that it is suitable for building a social network using iGraph.
+```{r}
+BF<-read.csv("best.friends.csv", header=TRUE)
+GOW<-read.csv("get.on.with.csv", header=TRUE)
+WW<-read.csv("work.with.csv",header=TRUE)
+
+# factorization
+BF$layerID <- as.factor(BF$layerID)
+BF$from <- as.factor(BF$from)
+BF$to <- as.factor(BF$to)
+GOW$layerID <- as.factor(GOW$layerID)
+GOW$from <- as.factor(GOW$from)
+GOW$to <- as.factor(GOW$to)
+WW$layerID <- as.factor(WW$layerID)
+WW$from <- as.factor(WW$from)
+WW$to <- as.factor(WW$to)
+
+```
+
+## Visualize the Networks
+
+I create a graph for each of the data sets, visualize each of the graphs and color the nodes according to gender. The graph are directed. 
+
+```{r, warning=FALSE, message=FALSE}
+library(igraph)
+library(dplyr)
+#igraph requires data to be in a particular structure. There are several structures that it can use but I will be using a combination of an "edge list" and a "vertex list". The edge list contains a list of all the relationships between students and any characteristics of those edges that I might be interested in. There are two essential variables in the edge list a "from" variable and a "to" variable that descibe the relationships between vertices (a disciplinary action is given "from" and teacher "to" a student). While the vertix list contains all the characteristics of those vertices, in my case gender.
+
+# vertex gender list
+V.BF<-dplyr::select(BF,from, gender.from)
+V.BF<-unique(V.BF)
+V.GOW<-dplyr::select(GOW,from, gender.from)
+V.GOW<-unique(V.GOW)
+V.WW<-dplyr::select(WW,from, gender.from)
+V.WW<-unique(V.WW)
+
+
+# plot the graphs
+BF.graph <- graph.data.frame(BF[,2:3], directed = TRUE, vertices = V.BF) #"directed=TRUE" is used since it is "from one student to another"
+pdf("BF_graph.pdf")
+plot(BF.graph,layout=layout.fruchterman.reingold, vertex.color=V.BF$gender.from, vertex.size=15, arrow.size=0.1) # plot our graph using the force directed graphing technique Fruchertman-Reingold!
+dev.off()
+
+GOW.graph <- graph.data.frame(GOW[,2:3], directed = TRUE, vertices = V.GOW)
+pdf("GOW_graph.pdf")
+plot(GOW.graph, layout=layout.fruchterman.reingold, vertex.color=V.GOW$gender.from)
+dev.off()
+
+WW.graph <- graph.data.frame(WW[,2:3], directed = TRUE, vertices = V.WW)
+pdf("WW_graph.pdf")
+plot(WW.graph, layout=layout.fruchterman.reingold,dvertex.color=V.WW$gender.from)
+dev.off()
+```
+
+## Centrality Measures
+### Degree centrality
+Who in the class has the highest *degree centrality* for each measure?
+
+```{r}
+
+bestfriend<-centr_degree(BF.graph, mode="all") #centr_degree function generates a list
+which(bestfriend$res==max(bestfriend$res)) # No 8 has the highest degree centrality
+
+
+getonwith<-centr_degree(GOW.graph, mode="all")
+which(getonwith$res==max(getonwith$res)) # No 11 has the highest degree centrality
+
+
+workwith<-centr_degree(WW.graph, mode="all")
+which(workwith$res==max(workwith$res)) # No 6 has the highest degree centrality
+
+```
+
+*Degree centrality* mean different things for each of the networks.
+
+If an actor recieves many ties, they are often said to be more prominent or to have high prestige. The student with the highest indegree centrality value for the "Best Friend" network is the most popular student in class. For the "Prefer to work with" network, student with the highest indegree centrality is the smartest, caring, trustworthy and reliable student. For "Get on with" network, the student with the highest indegree network is the most easy-going person that make people feel comfortable to be with.
+
+### Closeness centrality
+Who in the class has the highest *closeness centrality*?
+
+```{r}
+best_closeness<-closeness(BF.graph, mode="all")
+which.max(best_closeness) #NO8 has the highest closeness centrality of 30 
+#Which.max finds the numeric vector
+
+get_closeness<-closeness(GOW.graph, mode="all")
+which.max(get_closeness) #NO8
+
+work_closeness<-closeness(WW.graph, mode="all")
+which.max(work_closeness)#NO6
+```
+
+### Betweeness centrality
+How does *betweeness centrality* differ from degree centrality? Does their utility differ between the three networks?
+
+"Between centrality" shows which nodes act as bridges between nodes in a network. It does this by identifying all the shortest paths and then counting how many times each nodes falls on one. We can use this to analyze communicaiton dynamics and identify the individuals who influence the flow around the system.
+
+
+## Simple structures
+Count the number of dyads and the number and type of triads using the following commands.
+
+```{r}
+dyad_census(BF.graph)
+dyad_census(GOW.graph)
+dyad_census(WW.graph)
+#mut	The number of pairs with mutual connections.
+#asym	The number of pairs with non-mutual connections.
+#null	The number of pairs with no connection between them.
+
+```
+[Documentation](http://igraph.org/r/doc/dyad_census.html)
+
+```{r}
+triad_census(BF.graph)
+triad_census(GOW.graph)
+triad_census(WW.graph)
+```
+[Documentation](http://igraph.org/r/doc/triad_census.html)
+
+What are the insights generated from the metrics? If so what?
+
+When it comes to the number of paris with nutual connections, there are 121 pairs of students which get along with each otehr in class, followed by 55 pairs of students consider each other as best friends, and 46 pairs of students prefer to work with each other. However, not all relationships are reciprocated. "Asym"" indicates the numer of pairs with non-mutual connection and "null" indicates the numer of pairs with no connection with them. For example, 71 student choose the best friend in his/her mind but his/her best friend did not choose it back.
+
+
+
+## Cliques
+
+What is the size of the *largest clique(s) *in each of the three networks?
+[clique functions](http://igraph.org/r/doc/cliques.html)
+
+```{r}
+# Calculates the size of the largest clique(s);return a list containing numeric vectors of vertex ids. Each list element is a clique.
+# OR we can use "largest.cluques" function
+
+clique_num(BF.graph) #the size of the largest clique is 7
+clique_num(GOW.graph) #the size of the largest clique is 12
+clique_num(WW.graph) #the size of the largest cluque is 9
+
+```
+
+Which *nodes/vertices* are in the largest cliques for the three networks? Is there much overlap?
+
+```{r}
+bf<-largest_cliques(BF.graph) #the followings are in the largest cliques of "Best friend": 8,15,16,21,14,20,22
+
+gow<-largest.cliques(GOW.graph) #the followings are in the largest cliques of "Get on with": 8,11,27,15,13,24,23,20,14,19,22,26
+
+ww<-largest.cliques(WW.graph)#the followings are in the largest cliques of "Work with":6,15,16,14,19,23,20,21,22
+#There are lots of overlap among three graphs, especially for the student 15,20,22 who are in all of the largest cliques for the three networks
+
+```
+
+How many *maximal cliques* are there in each of the networks?
+
+```{r}
+# "max_cliques": finds all maximal cliques in the input graph. A clique in maximal if it cannot be extended to a larger clique. The largest cliques are always maximal, but a maximal clique is not neccessarily the largest.
+
+count_max_cliques(BF.graph) #35
+count_max_cliques(GOW.graph) #64
+count_max_cliques(WW.graph) #36
+```
+
+## Components & Cutpoints
+
+Find the *cutpoints (articulation points)* for each of the three networks I generated. What I find match a visual exploration of the networks.
+
+```{r}
+#Articuation points or cut vertices are vertices whose removal increases the number of connected components in a graph.
+
+articulation_points(BF.graph) #one cut point, which is student NO 13. In the "best friend" network, student with an ID number 13 serves as a connection point between two students and the rest of the class
+
+articulation_points(GOW.graph) #no cut point, which means that all students get on with each other and there are no two isolated groups of students connected by only one student. This is also support by the visual representation of the network
+
+articulation_points(WW.graph) #one cut point, which is student NO 13.
+```
+
+
+## Putting it all together
+
+The followings is a *narrative description of the social ties *among members of this 7th grade class using the network, centrality and structural metrics you have developed. 
+
+
+Supported by the visual representation of the network, students prefer to have social ties with those of the same gender. Male students tend to be one side of the network while male students tend to be on the other side of the network. Despite of this, all students get on with each other and this is supported by the fact that there is no articulation point for the "Get on with" network. 
+
+Based on my analysis, one recommendation to the teacher of this class is to randomly assign equal porportion of girls and boys to do peoject together. Also, with the help of student 13, teacher should help students with ID 18 and 25 to interact with other students more.
+
+
+
+
+
+
+
+
+```{r}
